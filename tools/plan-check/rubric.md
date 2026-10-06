@@ -1,0 +1,16 @@
+# Rubric: is this plan ready to post and build from?
+
+## Checks
+
+| Check | Evidence | Pass condition | Weight |
+|---|---|---|---|
+| cause-fits-repro | The plan's stated cause and fix target, read against what the repro evidence block actually shows (its commands, output, and the behavior it pins down). | Pass if the stated cause explains the behavior the repro shows, and the planned fix removes that cause. Fail if the cause contradicts or ignores the repro output, or if the fix only hides the symptom while the repro points at a different cause. | required |
+| scope-bounded | The plan's in-scope and not-in-scope statements and its list of files, read against what the issue asks for. | Pass if the plan is one change a reviewer could review as a single pull request, it does what the issue asks, and anything else it spots (cleanups, refactors, extra features) is left out or named as separate work. Fail if it adds work the issue did not ask for, or names no limits at all. | required |
+| executable | The plan's files, approach, and order of work, read against the repro evidence and the repo-facts block. | Pass if a stranger could start the first step using only the plan: it names the files or areas to change, says what will be done in each, and nothing it depends on is missing or impossible according to the repo evidence. Fail if the approach is undecided ("figure out", "refactor as needed"), if the files are not named, or if it relies on a file, tool, or access that the evidence shows does not exist. | required |
+| test-is-decisive | The plan's test plan read against the repro evidence's steps and artifacts. | Pass if the test plan re-runs the repro's own steps (or a check on the same behavior) and says what output would show the fix worked, so it would fail before the change and pass after. Fail if it only says to run the tests or verify it works, or checks something the repro never showed. | required |
+| thread-and-conventions | The plan comment read against the thread highlights (maintainer signals) and the repo-facts block (branch, commit, template, and contribution rules, including any AI-use policy). | Pass if the comment fits what the maintainers said in the thread and breaks no stated repo rule. If the repo states no rule that applies to a plan comment, pass. Fail if it ignores a direction a maintainer gave, restates something the thread already settled as if new, or breaks a stated rule (including staying silent when disclosure of AI use is required for comments). | required |
+| unknowns-honest | The plan's risks and unknowns, read against the claims it makes elsewhere. | Pass if open questions are stated as open and every claim of fact is backed by the repro evidence or by something the plan quotes. Fail if a guess is written as a fact, or the plan says nothing is uncertain while the evidence leaves gaps. | preferred |
+
+## Verdict rule
+
+Accept (ready) only if all five required checks pass. A preferred check never changes the verdict. A grade of unclear counts as fail. If the evidence for a required check is missing from the package, that check is a fail, not unclear. When the verdict is reject, quote the text of the first required check that failed.
